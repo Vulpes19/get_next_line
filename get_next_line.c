@@ -6,7 +6,7 @@
 /*   By: abaioumy <abaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:14:09 by abaioumy          #+#    #+#             */
-/*   Updated: 2021/12/12 22:07:35 by abaioumy         ###   ########.fr       */
+/*   Updated: 2021/12/14 13:56:59 by abaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,54 +17,50 @@ char *findnewline(char **str)
 	int counter;
 	char *line;
 	char *temp;
+	
 	counter = 0;
 	if (**str == '\0')
-	{	
-		free(*str);
-		*str = NULL;
 		return (NULL);
-	}
 	while((*str)[counter] && (*str)[counter] != '\n')
 		counter++;
 	line = ft_substr(*str, 0 , counter + 1);
-	temp = ft_substr(*str, counter + 1, 1000);
-	free(*str);
+	if ((*str)[counter])
+		temp = ft_substr(*str, counter + 1, 1000);
+	else
+		temp = ft_strdup("");
+    free(*str);	
 	*str = temp;
 	return (line);
 }
 char	*get_next_line(int fd)
 {
 
-	int		i;
-	char	*str = NULL;
-	char *line = NULL;
+	char 		*line = NULL;
+	char		*str = NULL;
 	static char	*saved;
-	if(saved == NULL)
-		saved = ft_strdup("");
+	int			i;
 	
-	if (check_nl(saved))
-		{
-			line = findnewline(&saved);
-			return (line);
-		}
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return(NULL);
+	// if(saved == NULL)
+	// 	saved = ft_strdup("");
 	str = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	i = 1;
-	while (i > 0)
+	while (i > 0 && !check_nl(saved))
 	{
 		i = read(fd, str, BUFFER_SIZE);
-		str[i] = '\0';
-		saved = ft_strjoin(saved, str);
-		
-		if (check_nl(saved))
+		if (i < 0)
 		{
-			line = findnewline(&saved);		
-			break;
+			free_pointer(&str);
+			free_pointer(&saved);
+	 		return (NULL);
 		}
+		str[i] = '\0';
+		saved = ft_strjoin(&saved, str);
 	}
-	if (i < 0)
-	{
-		free (str);
-		return (NULL);
-	}
+	line = findnewline(&saved);
+	free_pointer(&str);
+	if (*saved == 0)
+		free_pointer(&saved);
 	return (line);
 }
