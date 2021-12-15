@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaioumy <abaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/03 18:24:52 by abaioumy          #+#    #+#             */
-/*   Updated: 2021/12/15 19:29:57 by abaioumy         ###   ########.fr       */
+/*   Created: 2021/12/14 16:46:06 by abaioumy          #+#    #+#             */
+/*   Updated: 2021/12/15 19:46:17 by abaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*ft_cat(char *dest, char *src, char *ptr, int len)
 {

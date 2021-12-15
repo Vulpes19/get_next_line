@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abaioumy <abaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/03 18:14:09 by abaioumy          #+#    #+#             */
-/*   Updated: 2021/12/15 19:29:49 by abaioumy         ###   ########.fr       */
+/*   Created: 2021/12/14 16:43:05 by abaioumy          #+#    #+#             */
+/*   Updated: 2021/12/15 19:45:21 by abaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	free_pointers(char **ptr1, char **ptr2)
 {
@@ -26,7 +26,6 @@ void	free_pointers(char **ptr1, char **ptr2)
 		free(*ptr2);
 		*ptr2 = NULL;
 	}
-	return ;
 }
 
 char	*subfunc(char *s, char *substr, int start, int len)
@@ -92,27 +91,27 @@ char	*get_next_line(int fd)
 {
 	char		*line;
 	char		*str;
-	static char	*saved;
+	static char	*saved[OPEN_MAX];
 	int			i;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	str = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	i = 1;
-	while (i > 0 && !check_nl(saved))
+	while (i > 0 && !check_nl(saved[fd]))
 	{
 		i = read(fd, str, BUFFER_SIZE);
 		if (i < 0)
 		{
-			free_pointers(&str, &saved);
+			free_pointers(&str, &saved[fd]);
 			return (NULL);
 		}
 		str[i] = '\0';
-		saved = ft_strjoin(&saved, str);
+		saved[fd] = ft_strjoin(&saved[fd], str);
 	}
-	line = find_line(&saved);
+	line = find_line(&saved[fd]);
 	free_pointers(&str, NULL);
-	if (*saved == 0)
-		free_pointers(&saved, NULL);
+	if (*saved[fd] == 0)
+		free_pointers(&saved[fd], NULL);
 	return (line);
 }
