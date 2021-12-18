@@ -6,7 +6,7 @@
 /*   By: abaioumy <abaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 16:46:06 by abaioumy          #+#    #+#             */
-/*   Updated: 2021/12/15 19:46:17 by abaioumy         ###   ########.fr       */
+/*   Updated: 2021/12/18 12:42:21 by abaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	check_nl(char *saved)
 		while (saved[i])
 		{
 			if (saved[i] == '\n')
-				return (i);
+				return (1);
 			i++;
 		}
 	}

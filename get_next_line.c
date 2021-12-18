@@ -6,7 +6,7 @@
 /*   By: abaioumy <abaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 18:14:09 by abaioumy          #+#    #+#             */
-/*   Updated: 2021/12/15 19:29:49 by abaioumy         ###   ########.fr       */
+/*   Updated: 2021/12/18 12:51:11 by abaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 void	free_pointers(char **ptr1, char **ptr2)
 {
-	if (*ptr1)
+	if (ptr1 && *ptr1)
 	{
 		free(*ptr1);
 		*ptr1 = NULL;
 	}
-	if (ptr2 == NULL)
-		return ;
-	if (*ptr2)
+	if (ptr2 && *ptr2)
 	{
 		free(*ptr2);
 		*ptr2 = NULL;
@@ -47,21 +45,21 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 {
 	int		i;
 	char	*substr;
-	int		len1;
+	int		slen;
 
 	i = 0;
-	len1 = ft_strlen(s);
+	slen = ft_strlen(s);
 	substr = NULL;
 	if (!s || !*s)
 		return (0);
-	if ((int)start > len1)
+	if ((int)start > slen)
 		return (ft_strdup(""));
-	if (len1 == (int)len)
+	if (slen == (int)len)
 		substr = (char *)malloc(sizeof(char) * len - start + 1);
-	else if (len1 + start >= len)
+	else if (slen + start >= len)
 		substr = (char *)malloc(sizeof(char) * len + 1);
-	else if (len1 + start < len)
-		substr = (char *)malloc(sizeof(char) * len1 + 1);
+	else if (slen + start < len)
+		substr = (char *)malloc(sizeof(char) * slen + 1);
 	if (!substr)
 		return (NULL);
 	return (subfunc(s, substr, start, len));
